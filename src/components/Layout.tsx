@@ -5,6 +5,7 @@ import {
   Flex,
   useColorMode,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { theme } from "../theme";
 
 interface LayoutProps {
