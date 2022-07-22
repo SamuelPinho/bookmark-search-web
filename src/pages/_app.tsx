@@ -2,6 +2,7 @@
 import { ColorModeScript } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import { Chakra } from "../ChakraWrapper";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -11,11 +12,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="shortcut icon" href="/captain-128.png" />
         <title>Captain Browser Extension</title>
       </Head>
-      <ColorModeScript initialColorMode="dark" />
 
-      <Component {...pageProps} />
+      <Chakra cookies={pageProps.cookies}>
+        <Component {...pageProps} />
+      </Chakra>
     </>
   );
 }
 
+export { getServerSideProps } from "../ChakraWrapper";
 export default MyApp;
