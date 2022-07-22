@@ -1,28 +1,14 @@
 import {
   ChakraProvider,
-  ColorModeProvider,
   ColorModeScript,
   CSSReset,
-  DarkMode,
-  extendTheme,
   Flex,
-  Text,
-  ThemeConfig,
 } from "@chakra-ui/react";
-import { ParallaxProvider } from "react-scroll-parallax";
+import { theme } from "../theme";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
-
-const config: ThemeConfig = {
-  initialColorMode: "dark",
-  useSystemColorMode: false,
-};
-
-const theme = extendTheme({
-  config,
-});
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
