@@ -13,14 +13,13 @@ import {
 } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import type { NextPage } from "next";
-import React, { useEffect } from "react";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import {
   FaCaretDown,
+  FaCaretUp,
   FaGithub,
   FaHeart,
   FaLinkedinIn,
-  FaSortDown,
 } from "react-icons/fa";
 import { Layout } from "../components/Layout";
 import { useIntersection } from "../hooks";
@@ -28,8 +27,6 @@ import { BoltIcon } from "../icons/Bolt";
 import { BrowserIcon } from "../icons/Browser";
 import { ConfigIcon } from "../icons/Config";
 import { KeycapIcon } from "../icons/Keycap";
-
-type SectionNames = "first" | "second" | "third";
 
 const Home: NextPage = () => {
   const firstSectionRef = useRef<HTMLDivElement>(null);
@@ -49,7 +46,7 @@ const Home: NextPage = () => {
         ? secondSectionRef
         : thirdSectionRef;
 
-    if (sectionRef.current) {
+    if (sectionRef?.current) {
       sectionRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
@@ -73,7 +70,7 @@ const Home: NextPage = () => {
           left="0"
         >
           <Text fontWeight={"bold"} fontSize="4xl" textAlign={"center"}>
-            Superpower your browser with Lightning🔥
+            Superpower your browser with Captain ⚔️
           </Text>
           <Image
             src="/demo.gif"
@@ -113,51 +110,63 @@ const Home: NextPage = () => {
             alignItems={"center"}
             justifyContent="center"
             ref={firstSectionRef}
-            handleGoDown={() => handleGoToSection("second")}
+            goDownButton={{
+              handleAction: () => handleGoToSection("second"),
+              text: "Discover our Features",
+            }}
           >
-            <Text
-              maxW={"500px"}
-              textAlign="center"
-              fontSize={"2xl"}
-              textColor="gray.200"
-            >
-              A browser extension that allows fast searcing of bookmarks,
-              history and much more
-            </Text>
+            <Flex flexDir="column" alignItems={"center"}>
+              <Text
+                maxW={"500px"}
+                textAlign="center"
+                fontSize={"3xl"}
+                textColor="gray.200"
+                mb="12"
+              >
+                An extension that simplifies your navigation on the browser
+              </Text>
+            </Flex>
           </ScrollRightSection>
           <ScrollRightSection
+            alignItems={"center"}
+            justifyContent="center"
             ref={secondSectionRef}
-            handleGoDown={() => handleGoToSection("third")}
+            goDownButton={{
+              handleAction: () => handleGoToSection("third"),
+              text: "Discover more",
+            }}
+            goUpButton={{
+              handleAction: () => handleGoToSection("first"),
+              text: "Go back",
+            }}
           >
-            <Flex flexDir={"row"} alignItems="center" justifyContent={"center"}>
-              <Flex
-                flexDir={"row"}
-                justifyContent="center"
-                alignItems={"center"}
-                gap="16"
-                flexWrap={"wrap"}
-              >
-                <PerkBox
-                  title="Fast Search"
-                  description="No more lost and forgotten bookmarks. Go back to visited pages quickly"
-                  icon="bolt"
-                />
-                <PerkBox
-                  title="Shortcut Powered"
-                  description="No need to click anywhere. You can do anything with some simple keyboard shortcuts"
-                  icon="keycap"
-                />
-                <PerkBox
-                  title="Browser Commands"
-                  description="Quick access to some of the most useful browser commands"
-                  icon="browser"
-                />
-                <PerkBox
-                  title="Fully Customizable"
-                  description="You can change the search, shortcuts, commands, colors and much more"
-                  icon="config"
-                />
-              </Flex>
+            <Flex
+              flexDir={"column"}
+              justifyContent="center"
+              alignItems={"center"}
+              flexWrap={"wrap"}
+              gap={"8"}
+            >
+              <PerkBox
+                title="Fast Search"
+                description="No more lost and forgotten bookmarks. Go back to visited pages quickly"
+                icon="bolt"
+              />
+              <PerkBox
+                title="Shortcut Powered"
+                description="No need to click anywhere. You can do anything with some simple keyboard shortcuts"
+                icon="keycap"
+              />
+              <PerkBox
+                title="Browser Commands"
+                description="Quick access to some of the most useful browser commands"
+                icon="browser"
+              />
+              <PerkBox
+                title="Fully Customizable"
+                description="You can change the search, shortcuts, commands, colors and much more"
+                icon="config"
+              />
             </Flex>
           </ScrollRightSection>
           <ScrollRightSection
@@ -166,6 +175,10 @@ const Home: NextPage = () => {
             flexDir={"column"}
             rowGap="12"
             ref={thirdSectionRef}
+            goUpButton={{
+              handleAction: () => handleGoToSection("second"),
+              text: "Go back",
+            }}
           >
             <Button
               variant={"outline"}
@@ -246,13 +259,20 @@ const Home: NextPage = () => {
 };
 
 interface ScrollRightSectionProps extends FlexProps {
-  handleGoDown?: () => void;
+  goUpButton?: {
+    text: string;
+    handleAction: () => void;
+  };
+  goDownButton?: {
+    text: string;
+    handleAction: () => void;
+  };
 }
 
 const ScrollRightSection = React.forwardRef<
   HTMLDivElement,
   ScrollRightSectionProps
->(({ children, handleGoDown, ...flexProps }, ref) => {
+>(({ children, goUpButton, goDownButton, ...flexProps }, ref) => {
   return (
     <Flex
       bg="gray.900"
@@ -262,8 +282,28 @@ const ScrollRightSection = React.forwardRef<
       ref={ref}
       scrollBehavior="smooth"
     >
+      {goUpButton && (
+        <Flex
+          position={"absolute"}
+          top={6}
+          margin="0 auto"
+          w="100%"
+          alignItems={"center"}
+          justifyContent="center"
+        >
+          <Button
+            aria-label="go to another section"
+            variant={"outline"}
+            size="sm"
+            leftIcon={<ChakraIcon as={FaCaretUp} />}
+            onClick={goUpButton.handleAction}
+          >
+            {goUpButton.text}
+          </Button>
+        </Flex>
+      )}
       {children}
-      {handleGoDown && (
+      {goDownButton && (
         <Flex
           position={"absolute"}
           bottom={6}
@@ -272,13 +312,15 @@ const ScrollRightSection = React.forwardRef<
           alignItems={"center"}
           justifyContent="center"
         >
-          <IconButton
+          <Button
             aria-label="go to another section"
             variant={"outline"}
             size="sm"
-            icon={<ChakraIcon as={FaCaretDown} />}
-            onClick={handleGoDown}
-          />
+            leftIcon={<ChakraIcon as={FaCaretDown} />}
+            onClick={goDownButton.handleAction}
+          >
+            {goDownButton.text}
+          </Button>
         </Flex>
       )}
     </Flex>
@@ -303,23 +345,20 @@ const PerkBox = ({ title, description, icon }: PerkBoxProps) => {
       : KeycapIcon;
 
   return (
-    <VStack
-      alignItems="center"
-      maxW={"250px"}
-      textAlign="center"
-      minH={"190px"}
-    >
-      <Icon
-        w={"64px"}
-        h={"64px"}
-        border={"1px"}
-        borderColor={"gray.600"}
-        borderRadius="lg"
-        p={2}
-      />
-      <Text fontWeight={"bold"} fontSize="xl">
-        {title}
-      </Text>
+    <VStack alignItems="center" maxW={"350px"} textAlign="left">
+      <HStack w="100%">
+        <Icon
+          w={"64px"}
+          h={"64px"}
+          border={"1px"}
+          borderColor={"gray.600"}
+          borderRadius="lg"
+          p={2}
+        />
+        <Text fontWeight={"bold"} fontSize="xl">
+          {title}
+        </Text>
+      </HStack>
       <Text color="gray.400">{description}</Text>
     </VStack>
   );
