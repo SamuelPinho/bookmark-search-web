@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="shortcut icon" href="/captain-128.png" />
         <title>Captain Browser Extension</title>
       </Head>
+      <ColorModeScript initialColorMode={"dark"} />
 
       <Chakra cookies={pageProps.cookies}>
         <Component {...pageProps} />
