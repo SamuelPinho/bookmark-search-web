@@ -14,6 +14,8 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   const { toggleColorMode, colorMode } = useColorMode();
+  console.log({ colorMode });
+
   useEffect(() => {
     if (
       localStorage.getItem("chakra-ui-color-mode") === "light" &&
