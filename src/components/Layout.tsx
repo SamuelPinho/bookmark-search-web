@@ -1,14 +1,11 @@
 import {
   ChakraProvider,
-  ColorModeProvider,
   ColorModeScript,
   CSSReset,
   extendTheme,
   Flex,
-  Text,
   ThemeConfig,
 } from "@chakra-ui/react";
-import { ParallaxProvider } from "react-scroll-parallax";
 
 interface LayoutProps {
   children: React.ReactNode;
