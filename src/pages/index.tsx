@@ -7,6 +7,7 @@ import {
   Icon as ChakraIcon,
   IconButton,
   Image,
+  Link,
   Text,
   theme,
   VStack,
@@ -149,12 +150,12 @@ const Home: NextPage = () => {
             >
               <PerkBox
                 title="Fast Search"
-                description="No more lost and forgotten bookmarks. Go back to visited pages quickly"
+                description="No more lost and forgotten bookmarks. Access them quickly and bookmarks the way they're supposed to"
                 icon="bolt"
               />
               <PerkBox
                 title="Shortcut Powered"
-                description="No need to click anywhere. You can do anything with some simple keyboard shortcuts"
+                description="No need to click anywhere. You can do everything with some simple shortcuts"
                 icon="keycap"
               />
               <PerkBox
@@ -162,11 +163,11 @@ const Home: NextPage = () => {
                 description="Quick access to some of the most useful browser commands"
                 icon="browser"
               />
-              <PerkBox
+              {/* <PerkBox
                 title="Fully Customizable"
                 description="You can change the search, shortcuts, commands, colors and much more"
                 icon="config"
-              />
+              /> */}
             </Flex>
           </ScrollRightSection>
           <ScrollRightSection
@@ -197,10 +198,19 @@ const Home: NextPage = () => {
             </Button>
             <Flex flexDir={"column"}>
               <Flex>
-                <Text mb="2" color="gray.600">
+                <Text mb="2" color="gray.500">
                   Made by
                 </Text>
-                <Text color="gray.200">&nbsp;Samuel Monteiro</Text>
+                <Text color="gray.200">
+                  &nbsp;
+                  <Link
+                    href="https://github.com/SamuelPinho"
+                    target={"_blank"}
+                    textDecor="underline"
+                  >
+                    Samuel Monteiro
+                  </Link>
+                </Text>
               </Flex>
               <Button
                 onClick={() =>
@@ -275,7 +285,7 @@ const ScrollRightSection = React.forwardRef<
 >(({ children, goUpButton, goDownButton, ...flexProps }, ref) => {
   return (
     <Flex
-      bg="gray.900"
+      bg="#1b2636"
       h="100vh"
       pos="sticky"
       {...flexProps}
