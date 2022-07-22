@@ -13,23 +13,16 @@ interface LayoutProps {
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  const { toggleColorMode, colorMode } = useColorMode();
+  const { setColorMode, colorMode } = useColorMode();
   console.log({ colorMode });
 
   useEffect(() => {
-    if (
-      localStorage.getItem("chakra-ui-color-mode") === "light" &&
-      colorMode === "dark"
-    ) {
-      setTimeout(() => toggleColorMode(), 1500);
-    } else if (
-      localStorage.getItem("chakra-ui-color-mode") === "dark" &&
-      colorMode === "light"
-    ) {
-      setTimeout(() => toggleColorMode(), 1500);
+    console.log({ colorMode });
+    if (colorMode === "light") {
+      setColorMode("dark");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [colorMode]);
 
   return (
     <>
