@@ -2,16 +2,11 @@
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { useState } from "react";
 import { Chakra } from "../ChakraWrapper";
 import { theme } from "../theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  document.cookie = `isDarkMode=true`;
 
   return (
     <>
@@ -25,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Chakra cookies={pageProps.cookies}>
         <ColorModeScript initialColorMode={"dark"} />
         <ChakraProvider theme={theme}>
-          {mounted && <Component {...pageProps} />}
+          <Component {...pageProps} />
         </ChakraProvider>
       </Chakra>
     </>
@@ -34,6 +29,3 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 export { getServerSideProps } from "../ChakraWrapper";
 export default MyApp;
-function useEffect(arg0: () => void, arg1: never[]) {
-  throw new Error("Function not implemented.");
-}

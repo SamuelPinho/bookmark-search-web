@@ -3,6 +3,7 @@ import {
   ColorModeScript,
   CSSReset,
   Flex,
+  useColorMode,
 } from "@chakra-ui/react";
 import { theme } from "../theme";
 
@@ -11,6 +12,22 @@ interface LayoutProps {
 }
 
 export const Layout = ({ children }: LayoutProps) => {
+  const { toggleColorMode, colorMode } = useColorMode();
+  useEffect(() => {
+    if (
+      localStorage.getItem("chakra-ui-color-mode") === "light" &&
+      colorMode === "dark"
+    ) {
+      setTimeout(() => toggleColorMode(), 1500);
+    } else if (
+      localStorage.getItem("chakra-ui-color-mode") === "dark" &&
+      colorMode === "light"
+    ) {
+      setTimeout(() => toggleColorMode(), 1500);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <CSSReset />
