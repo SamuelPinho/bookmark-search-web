@@ -30,17 +30,15 @@ export const Layout = ({ children }: LayoutProps) => {
       <ColorModeScript initialColorMode={theme.initialColorMode} />
       <ChakraProvider theme={theme}>
         <CSSReset />
-        <DarkMode>
-          <Flex flexDir="column" minH="100vh" bg="#151d29">
-            <main>
-              <Flex flex="1">
-                <Flex w="full" h="100vh">
-                  {children}
-                </Flex>
+        <Flex flexDir="column" minH="100vh" bg="#151d29">
+          <main>
+            <Flex flex="1">
+              <Flex w="full" h="100vh">
+                {children}
               </Flex>
-            </main>
-          </Flex>
-        </DarkMode>
+            </Flex>
+          </main>
+        </Flex>
       </ChakraProvider>
     </>
   );
