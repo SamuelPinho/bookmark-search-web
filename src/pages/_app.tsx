@@ -6,8 +6,6 @@ import { Chakra } from "../ChakraWrapper";
 import { theme } from "../theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  document.cookie = `isDarkMode=true`;
-
   return (
     <>
       {/* Add the favicon */}
