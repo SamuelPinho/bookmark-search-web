@@ -1,5 +1,5 @@
 // import the Head component for appending elements to the head of the page
-import { ColorModeScript } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { Chakra } from "../ChakraWrapper";
@@ -15,7 +15,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ColorModeScript initialColorMode={"dark"} />
 
       <Chakra cookies={pageProps.cookies}>
-        <Component {...pageProps} />
+        <ColorModeScript initialColorMode={"dark"} />
+        <ChakraProvider theme={theme}>
+          <Component {...pageProps} />
+        </ChakraProvider>
       </Chakra>
     </>
   );
